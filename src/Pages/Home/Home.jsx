@@ -3,6 +3,7 @@ import { CarouselUI } from '../../Components/CarouselUI/CarouselUI'
 import { FadeCarousel } from '../../Components/FadeCarousel/FadeCarousel'
 import styles from './Home.module.css'
 
+
 export const Home = () => {
 
     return (

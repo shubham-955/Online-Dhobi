@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { LocalMallOutlined } from '@material-ui/icons';
 import styles from './Navbar.module.css'
+import { LoginModal } from '../LoginModal/LoginModal';
 
-export const Navbar = () => {
+export const Navbar = ({ isUserLoggedIn }) => {
+    const [open, setOpen] = useState(false)
+
     return (
         <div>
             <nav className={styles.navbar}>
@@ -27,12 +30,19 @@ export const Navbar = () => {
                     </ul>
                 </div>
                 <div className='cart'>
-                    <LocalMallOutlined style={{ fontSize: 30 }} />
-                    <div className='count'>
-                        {/* <p>{count}</p> */}
-                    </div>
+                    {isUserLoggedIn ?
+                        <LocalMallOutlined style={{ fontSize: 30 }} />
+                        :
+                        <div className={styles.login} onClick={() => setOpen(true)}>
+                            <p>Login or Register</p>
+                        </div>
+                    }
+                    {/* <div className='count'> */}
+                    {/* <p>{count}</p> */}
+                    {/* </div> */}
                 </div>
             </nav>
+            <LoginModal open={open} setOpen={setOpen} />
         </div>
     )
 }
