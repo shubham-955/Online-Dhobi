@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store'
 import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,15 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
+        <Toaster
+          toastOptions={{
+            style: {
+              padding: "5px 10px",
+              color: 'white',
+              fontSize: 16
+            }
+          }}
+        />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

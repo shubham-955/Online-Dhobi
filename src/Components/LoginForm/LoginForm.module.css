@@ -1,35 +1,3 @@
-.screenView {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modalView {
-    width: 400px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: none;
-    outline: none;
-}
-
-.closeIconView {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.closeIconView:hover {
-    cursor: pointer;
-}
-
 .modalTitle {
     width: 100%;
     height: 80px;
@@ -41,25 +9,47 @@
 .input {
     margin: 5px 0px;
     outline: none;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 500;
     padding: 5px 10px;
+}
+
+.input::placeholder {
+    font-size: 14px;
 }
 
 .modalTitle p {
     font-size: 14px;
     color: red;
+    font-weight: 500;
+    animation: errorText 1.5s ease-in-out;
+}
+
+@keyframes errorText {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .loginBtn {
     width: 30%;
     height: 40px;
-    background-color: #0e2737;
+    background-image: linear-gradient(94deg, #53b2fe, #065af3);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 4px;
     margin: 5px 0px;
+    border: none;
 }
 
 .loginBtn:hover {

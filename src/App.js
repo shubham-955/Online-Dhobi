@@ -1,21 +1,22 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { Home } from './Pages/Home/Home'
-import { About } from './Pages/About'
-import { Navbar } from './Components/Navbar/Navbar';
-import { Footer } from './Components/Footer/Footer';
 import { useSelector } from "react-redux";
+import { Loading } from './Components/Loading/Loading';
+import { Profile } from './Pages/Profile/Profile';
+import { Dashboard } from './Pages/Dashboard/Dashboard';
 
 function App() {
-  const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
+
+  const loading = useSelector((state) => state.load.loading);
+
+  if (loading) return <Loading />
+
   return (
     <div className='container'>
-      <Navbar isUserLoggedIn={isUserLoggedIn} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route index path="/*" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
-      <Footer />
     </div>
   );
 }

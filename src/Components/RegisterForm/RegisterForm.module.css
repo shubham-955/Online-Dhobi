@@ -1,0 +1,73 @@
+.modalTitle {
+    width: 100%;
+    height: 80px;
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin: 5px 0px;
+    outline: none;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+.input::placeholder {
+    font-size: 14px;
+}
+
+.modalTitle p {
+    font-size: 14px;
+    color: red;
+    font-weight: 500;
+    animation: errorText 1.5s ease-in-out;
+}
+
+@keyframes errorText {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.loginBtn {
+    width: 30%;
+    height: 40px;
+    background-image: linear-gradient(94deg, #53b2fe, #065af3);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin: 5px 0px;
+    border: none;
+}
+
+.loginBtn:hover {
+    cursor: pointer;
+}
+
+.loginBtn p {
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+}
+
+.registerMsg p {
+    color: blue;
+    margin: 10px auto;
+}
+
+.registerMsg p:hover {
+    color: #0e2737;
+    transition: 1s;
+    cursor: pointer;
+}

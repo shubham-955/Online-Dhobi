@@ -54,7 +54,7 @@
 .login {
     width: 150px;
     height: 40px;
-    background-color: #0E2737;
+    background-image: linear-gradient(94deg, #53b2fe, #065af3);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,9 +63,32 @@
 
 .login p {
     color: white;
-    font-weight: 500;
 }
 
 .login:hover {
     cursor: pointer;
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+}
+
+.profileIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: linear-gradient(94deg, #53b2fe, #065af3);
+    margin-left: 15px;
+}
+
+.profileIcon:hover {
+    cursor: pointer;
+}
+
+.profileIcon p {
+    color: white;
 }

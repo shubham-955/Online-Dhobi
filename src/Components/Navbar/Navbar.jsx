@@ -1,11 +1,40 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LocalMallOutlined } from '@material-ui/icons';
 import styles from './Navbar.module.css'
-import { LoginModal } from '../LoginModal/LoginModal';
+import { RegisterForm } from '../RegisterForm/RegisterForm';
+import { ModalUI } from '../ModalUI/ModalUI';
+import { LoginForm } from '../LoginForm/LoginForm';
+import { useForm } from 'react-hook-form';
 
-export const Navbar = ({ isUserLoggedIn }) => {
+export const Navbar = ({ isUserLoggedIn, userName }) => {
+
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false)
+    const [form, setForm] = useState("login")
+
+    const control = useForm();
+
+    const handleClose = () => {
+        setOpen(false);
+        control.unregister()
+    }
+
+    const renderItem = () => {
+        return (
+            <>
+                {form === "login" ?
+                    <LoginForm setForm={setForm} setOpen={setOpen} />
+                    :
+                    <RegisterForm setForm={setForm} setOpen={setOpen} />
+                }
+            </>
+        )
+    }
+
+    const handleIcon = () => {
+
+    }
 
     return (
         <div>
@@ -31,7 +60,12 @@ export const Navbar = ({ isUserLoggedIn }) => {
                 </div>
                 <div className='cart'>
                     {isUserLoggedIn ?
-                        <LocalMallOutlined style={{ fontSize: 30 }} />
+                        <div className={styles.userSection}>
+                            <LocalMallOutlined style={{ fontSize: 30 }} onClick={handleIcon} />
+                            <div className={styles.profileIcon} onClick={() => navigate('/profile')}>
+                                <p>{userName ? userName.split("")[0] : ""}</p>
+                            </div>
+                        </div>
                         :
                         <div className={styles.login} onClick={() => setOpen(true)}>
                             <p>Login or Register</p>
@@ -42,7 +76,12 @@ export const Navbar = ({ isUserLoggedIn }) => {
                     {/* </div> */}
                 </div>
             </nav>
-            <LoginModal open={open} setOpen={setOpen} />
+            <ModalUI
+                open={open}
+                handleClose={handleClose}
+                renderItem={renderItem()}
+                modalWidth={400}
+            />
         </div>
     )
 }
