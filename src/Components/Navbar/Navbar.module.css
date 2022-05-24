@@ -1,6 +1,9 @@
 .navbar {
     width: 100%;
-    height: 70px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     padding: 0px 50px;
     display: flex;
     flex-direction: row;
@@ -10,34 +13,34 @@
     box-shadow: 0 2px 14px 5px rgb(20 20 20 / 10%);
 }
 
-.brandName p {
-    color: #4a4541;
-    font-size: 30px;
-    font-weight: 600;
+.brandName {
+    width: 150px;
 }
 
-.brandName p:hover {
+.brandName a {
+    color: black;
+    font-size: 27px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.brandName a:hover {
     color: #0E2737;
     transition: 0.8s;
 }
 
-.brandName a {
-    text-decoration: none;
-}
-
 .tabs {
-    width: 30%;
+    width: 28%;
 }
 
 .tabs ul {
+    height: 60px;
     display: flex;
-    height: 70px;
     justify-content: space-between;
     align-items: center;
 }
 
 .tabs ul li {
-    color: #0E2737;
     list-style-type: none;
 }
 
@@ -45,44 +48,65 @@
     text-decoration: none;
 }
 
-.tabItem {
+.tabItem a {
     color: black;
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 500;
 }
 
+.accessBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .login {
-    width: 150px;
-    height: 40px;
-    background-image: linear-gradient(94deg, #53b2fe, #065af3);
+    width: 80px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-}
-
-.login p {
-    color: white;
 }
 
 .login:hover {
     cursor: pointer;
 }
 
-.userSection {
-    display: flex;
-    align-items: center;
-}
-
-.profileIcon {
+.register {
+    width: 80px;
+    height: 30px;
+    background-image: linear-gradient(94deg, #53b2fe, #0055a6);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-image: linear-gradient(94deg, #53b2fe, #065af3);
-    margin-left: 15px;
+    border-radius: 5px;
+}
+
+.register p {
+    color: white;
+}
+
+.register:hover {
+    cursor: pointer;
+}
+
+.userSection {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.shopBag {
+    margin-bottom: 5px;
+}
+
+.shopBag:hover {
+    cursor: pointer;
+}
+
+.profileIcon {
+    margin-left: 20px;
 }
 
 .profileIcon:hover {

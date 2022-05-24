@@ -6,21 +6,6 @@
     align-items: flex-start;
 }
 
-.headContainer {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 8px 5px rgb(10 10 10 / 4%);
-}
-
-.headContainer:hover {
-    cursor: pointer;
-}
-
 .mainContainer {
     width: 100%;
     display: flex;

@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import styles from "./Profile.module.css";
 import {
     ExitToAppOutlined,
-    EditOutlined,
-    ArrowBackOutlined
+    EditOutlined
 } from "@material-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../store/auth/auth.actions";
+import { getUserName, logout } from "../../store/auth/auth.actions";
 import { ModalUI } from "../../Components/ModalUI/ModalUI";
 import { ShowMessage } from "../../Utils/Utility";
 import { R } from "../../res";
-import { BASE_URL, GetFetch } from "../../ApiManager/ApiConst";
+import { BASE_URL, GetFetch, PutFetch } from "../../ApiManager/ApiConst";
 import { useForm } from 'react-hook-form';
+import { Loading } from "../../Components/Loading/Loading";
 
 export const Profile = () => {
-    useEffect(() => {
-        getProfile();
-    }, []);
 
+    useEffect(() => {
+        getProfile()
+    }, [])
+
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
@@ -44,12 +46,15 @@ export const Profile = () => {
 
     const getProfile = async () => {
         try {
+            setLoading(true)
             const response = await GetFetch(`${BASE_URL}auth/getuser`, "withAuth")
             if (response.status === 200) {
                 setUser(response.user)
+                setLoading(false)
             }
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     };
 
@@ -66,10 +71,7 @@ export const Profile = () => {
                             className={styles.input}
                             placeholder='Enter your name'
                             name="name"
-                            {...register('name',
-                                {
-                                    required: "Name is required"
-                                })}
+                            {...register('name')}
                         />
                         <p>{errors?.name?.message}</p>
                     </div>
@@ -84,7 +86,6 @@ export const Profile = () => {
                             name="email"
                             {...register('email',
                                 {
-                                    required: "Email is required",
                                     pattern: { value: /\S+@\S+\.\S+/, message: 'Email is invalid' }
                                 })}
                         />
@@ -101,7 +102,6 @@ export const Profile = () => {
                             name="mobile_number"
                             {...register('mobile_number',
                                 {
-                                    required: "Mobile number is required",
                                     pattern: { value: /^(\d{10})$/, message: 'Mobile number is invalid' }
                                 })}
                         />
@@ -120,45 +120,31 @@ export const Profile = () => {
         )
     }
 
-    console.log(errors)
     const onSubmit = async (item) => {
-        // try {
-        //     const authToken = getValue("userToken");
-        //     const response = await fetch(
-        //         "https://makemytripback.herokuapp.com/auth/edituser",
-        //         {
-        //             method: "PUT",
-        //             mode: "cors",
-        //             cache: "no-cache",
-        //             headers: {
-        //                 authToken: `${authToken}`,
-        //                 "content-type": "application/json",
-        //             },
-        //             body: JSON.stringify(data),
-        //         }
-        //     );
-        //     const json = await response.json();
-        //     console.log(json);
-
-        //     if (json.status === 200) {
-        //         dispatch(getUserName(credentials.name));
-        //         setTimeout(() => {
-        //             setOpen(false);
-        //             getProfile();
-        //         }, 1000);
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        // dispatch(startLoad())
+        setLoading(true)
+        const data = {
+            name: item.name ? item.name : user.name,
+            email: item.email ? item.email : user.email,
+            mobile_number: item.mobile_number ? item.mobile_number : user.mobile_number,
+        }
+        console.log(data)
+        try {
+            const response = await PutFetch(`${BASE_URL}auth/edituser`, data, "withAuth")
+            if (response.status === 200) {
+                dispatch(getUserName(response.user.name));
+                setOpen(false);
+                getProfile();
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false)
+        }
     };
 
+    if (loading) return <Loading />
     return (
         <div className={styles.myProfileContainer}>
-            <div className={styles.headContainer} onClick={() => navigate("/")}>
-                <ArrowBackOutlined
-                    style={{ fontSize: 25, color: "#666666" }}
-                />
-            </div>
             <div className={styles.mainContainer}>
                 <div className={styles.profileContainer}>
                     <div className={styles.profilePicView}>

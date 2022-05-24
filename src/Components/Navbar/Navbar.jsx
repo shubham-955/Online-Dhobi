@@ -1,87 +1,80 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { LocalMallOutlined } from '@material-ui/icons';
+import React from 'react'
+import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css'
-import { RegisterForm } from '../RegisterForm/RegisterForm';
-import { ModalUI } from '../ModalUI/ModalUI';
-import { LoginForm } from '../LoginForm/LoginForm';
-import { useForm } from 'react-hook-form';
+import { UilShoppingBag, UilUser } from '@iconscout/react-unicons'
+import { Badge } from '@material-ui/core';
 
 export const Navbar = ({ isUserLoggedIn, userName }) => {
 
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false)
-    const [form, setForm] = useState("login")
+    const location = useLocation();
+    // const [anchorEl, setAnchorEl] = useState(null)
+    // const show = Boolean(anchorEl)
+    // const control = useForm();
 
-    const control = useForm();
+    // const handleIcon = (e) => {
+    //     setAnchorEl(e.currentTarget)
+    // }
 
-    const handleClose = () => {
-        setOpen(false);
-        control.unregister()
+    // const onClose = () => {
+    //     setAnchorEl(null)
+    // }
+
+    const navLinkStyles = ({ isActive }) => {
+        return {
+            color: isActive ? "#f3752a" : "black"
+        }
     }
 
-    const renderItem = () => {
-        return (
-            <>
-                {form === "login" ?
-                    <LoginForm setForm={setForm} setOpen={setOpen} />
-                    :
-                    <RegisterForm setForm={setForm} setOpen={setOpen} />
-                }
-            </>
-        )
-    }
-
-    const handleIcon = () => {
-
-    }
-
+    const { pathname } = location;
+    console.log(pathname)
     return (
-        <div>
+        <>
             <nav className={styles.navbar}>
                 <div className={styles.brandName}>
-                    <Link to="/"> <p>Online Dhobi</p> </Link>
+                    <p><Link to="/">ONLINE DHOBI</Link></p>
                 </div>
-                <div className={styles.tabs}>
-                    <ul>
-                        <li className={styles.tabItem}>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li className={styles.tabItem}>
-                            <Link to="/about">About Us</Link>
-                        </li>
-                        <li className={styles.tabItem}>
-                            <Link to="/faq">FAQ</Link>
-                        </li>
-                        <li className={styles.tabItem}>
-                            <Link to="/contact">Contact Us</Link>
-                        </li>
-                    </ul>
-                </div>
-                <div className='cart'>
+                {pathname === "/auth/login" || pathname === "/auth/signup" ?
+                    <div />
+                    :
+                    <div className={styles.tabs}>
+                        <ul>
+                            <li className={styles.tabItem}>
+                                <NavLink style={navLinkStyles} to="/">Home</NavLink>
+                            </li>
+                            <li className={styles.tabItem}>
+                                <NavLink style={navLinkStyles} to="/about">About Us</NavLink>
+                            </li>
+                            <li className={styles.tabItem}>
+                                <NavLink style={navLinkStyles} to="/faq">FAQ</NavLink>
+                            </li>
+                            <li className={styles.tabItem}>
+                                <NavLink style={navLinkStyles} to="/contact">Contact Us</NavLink>
+                            </li>
+                        </ul>
+                    </div>}
+                <div>
                     {isUserLoggedIn ?
                         <div className={styles.userSection}>
-                            <LocalMallOutlined style={{ fontSize: 30 }} onClick={handleIcon} />
-                            <div className={styles.profileIcon} onClick={() => navigate('/profile')}>
-                                <p>{userName ? userName.split("")[0] : ""}</p>
+                            <Badge badgeContent={4} color='primary'>
+                                <UilShoppingBag size="26" color="black" className={styles.shopBag} />
+                            </Badge>
+                            <div className={styles.profileIcon} onClick={() => navigate("/profile")}>
+                                <UilUser size="26" color="black" />
                             </div>
                         </div>
                         :
-                        <div className={styles.login} onClick={() => setOpen(true)}>
-                            <p>Login or Register</p>
+                        <div className={styles.accessBtn}>
+                            <div className={styles.login} onClick={() => navigate("/auth/login")}>
+                                <p>Login</p>
+                            </div>
+                            <div className={styles.register} onClick={() => navigate("/auth/signup")}>
+                                <p>Sign Up</p>
+                            </div>
                         </div>
                     }
-                    {/* <div className='count'> */}
-                    {/* <p>{count}</p> */}
-                    {/* </div> */}
                 </div>
             </nav>
-            <ModalUI
-                open={open}
-                handleClose={handleClose}
-                renderItem={renderItem()}
-                modalWidth={400}
-            />
-        </div>
+        </>
     )
 }

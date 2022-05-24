@@ -7,10 +7,12 @@ import { getUserName, loginError, loginSuccess } from '../../store/auth/auth.act
 import { ShowMessage } from '../../Utils/Utility';
 import { R } from '../../res';
 import { startLoad, stopLoad } from '../../store/load/load.actions';
+import { useNavigate } from 'react-router-dom';
 
-export const LoginForm = ({ setForm, setOpen }) => {
+export const LoginForm = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {
         control,
         register,
@@ -45,59 +47,61 @@ export const LoginForm = ({ setForm, setOpen }) => {
             ShowMessage("Login Successfully", R.colors.lightGreen);
             dispatch(stopLoad())
             dispatch(getUserName(response.user.name));
-            setOpen(false);
+            navigate("/")
         }
     }
 
     const handleRegisterClick = () => {
-        setForm("register")
+        navigate("/auth/signup")
         control.unregister()
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className={styles.modalTitle}>
-                    <label htmlFor="mobile">Mobile Number</label>
-                    <input
-                        control={control}
-                        type="number"
-                        id='mobile'
-                        className={styles.input}
-                        placeholder='Enter your email'
-                        name="mobile_number"
-                        {...register('mobile_number',
-                            {
-                                required: "Mobile number is required",
-                                pattern: { value: /^(\d{10})$/, message: 'Mobile number is invalid' }
-                            })}
-                    />
-                    <p>{errors?.mobile_number?.message}</p>
-                </div>
-                <div className={styles.modalTitle}>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        control={control}
-                        type="text"
-                        id='password'
-                        className={styles.input}
-                        placeholder='Enter your password'
-                        name="password"
-                        {...register('password',
-                            {
-                                required: "Password is required",
-                                minLength: { value: 5, message: 'Password must be at least 5 characters' }
-                            })}
-                    />
-                    <p>{errors?.password?.message}</p>
-                </div>
-                <button className={styles.loginBtn}>
-                    <p>Login</p>
-                </button>
-                <div className={styles.registerMsg} onClick={handleRegisterClick}>
-                    <p>Click to create an account</p>
-                </div>
-            </form>
+        <div className={styles.screenView}>
+            <div className={styles.modal}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className={styles.modalTitle}>
+                        <label htmlFor="mobile">Mobile Number</label>
+                        <input
+                            control={control}
+                            type="number"
+                            id='mobile'
+                            className={styles.input}
+                            placeholder='Enter your email'
+                            name="mobile_number"
+                            {...register('mobile_number',
+                                {
+                                    required: "Mobile number is required",
+                                    pattern: { value: /^(\d{10})$/, message: 'Mobile number is invalid' }
+                                })}
+                        />
+                        <p>{errors?.mobile_number?.message}</p>
+                    </div>
+                    <div className={styles.modalTitle}>
+                        <label htmlFor="password">Password</label>
+                        <input
+                            control={control}
+                            type="text"
+                            id='password'
+                            className={styles.input}
+                            placeholder='Enter your password'
+                            name="password"
+                            {...register('password',
+                                {
+                                    required: "Password is required",
+                                    minLength: { value: 5, message: 'Password must be at least 5 characters' }
+                                })}
+                        />
+                        <p>{errors?.password?.message}</p>
+                    </div>
+                    <button className={styles.loginBtn}>
+                        <p>Login</p>
+                    </button>
+                    <div className={styles.registerMsg} onClick={handleRegisterClick}>
+                        <p>Click to create an account</p>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
